@@ -9,9 +9,9 @@ const props = defineProps<{
 }>()
 
 const names = [
-  'James', 'John', 'Robert', 'Michael', 'William', 
+  'James', 'John', 'Robert', 'Michael', 'William',
   'David', 'Richard', 'Joseph', 'Thomas', 'Charles',
-  'Christopher', 'Daniel', 'Matthew', 'Anthony', 'Donald', 
+  'Christopher', 'Daniel', 'Matthew', 'Anthony', 'Donald',
   'Mark', 'Tim', 'Patrik', 'Jim', 'Chris', 'Abor', 'Barak', 'Tobi', 'Andi'
 ]
 
@@ -53,14 +53,14 @@ const room = computed(() => {
 })
 
 function getParticipantAtPosition(position: Position): Participant | undefined {
-  return participants.value.find(participant => 
+  return participants.value.find(participant =>
     participant.position.x === position.x && participant.position.y === position.y
   )
 }
 
 function isValidDropTarget(position: Position): boolean {
   if (!draggedParticipant.value) return false
-  
+
   const targetParticipant = getParticipantAtPosition(position)
   return !targetParticipant || targetParticipant.id !== draggedParticipant.value.id
 }
@@ -70,7 +70,7 @@ function reorderParticipants(dropX: number, dropY: number) {
 
   const participantsInRow = participants.value.filter(p => p.position.y === dropY)
   const sortedParticipants = [...participantsInRow].sort((a, b) => a.position.x - b.position.x)
-  
+
   const currentIndex = sortedParticipants.findIndex(p => p.id === draggedParticipant.value!.id)
   if (currentIndex !== -1) {
     sortedParticipants.splice(currentIndex, 1)
@@ -128,7 +128,7 @@ function handleDragLeave() {
 }
 
 function isDropTarget(position: Position): boolean {
-  return dragOverPosition.value?.x === position.x && 
+  return dragOverPosition.value?.x === position.x &&
          dragOverPosition.value?.y === position.y &&
          isValidDropTarget(position)
 }
@@ -139,12 +139,7 @@ const gridTemplateColumns = computed(() => {
   for (let i = 0; i < totalColumns; i++) {
     columns.push('1fr')
     if (i < totalColumns - 1) {
-      // Add wider gap before the chair column
-      if (props.showChairRow && i === totalColumns - 2) {
-        columns.push('24px')
-      } else {
-        columns.push('8px')
-      }
+      columns.push('8px')
     }
   }
   return columns.join(' ')
@@ -153,8 +148,8 @@ const gridTemplateColumns = computed(() => {
 
 <template>
   <div class="w-full max-w-4xl mx-auto aspect-square">
-    <div 
-      class="grid gap-y-4 bg-gray-300 p-6 rounded-lg shadow-xl h-full" 
+    <div
+      class="grid gap-y-4 bg-gray-300 p-6 rounded-lg shadow-xl h-full"
       :style="{ gridTemplateColumns }"
     >
       <template v-for="row in room" :key="row[0].y">

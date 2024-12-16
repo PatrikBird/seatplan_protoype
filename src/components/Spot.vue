@@ -15,7 +15,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'participantDrop', position: Position): void
   (e: 'participantDragStart', participant: Participant): void
-  (e: 'dragOver', e: DragEvent, position: Position): void
+  (e: 'dragOver', event: DragEvent, position: Position): void
   (e: 'dragLeave'): void
 }>()
 
